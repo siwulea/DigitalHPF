@@ -335,9 +335,6 @@ interrupt void  ADCINT_ISR(void) // ADC Interrupt
     }
     else
     {
-//       Wm_esti = Kt*Ia_sensor*Ts/J;
-//       V_emf = Ke*Wm_esti/9.55;
-//        V_emf = Ra*Ia_sensor + La*(Ia_sensor_old-Ia_sensor)/Ts;
         Wm_esti = 0.0;
         V_emf = 0.0;
     }
