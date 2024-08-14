@@ -434,8 +434,16 @@ volatile struct XINTF_REGS XintfRegs;
     float Tsamp = 0.0;
     float Wc = 0.0;
     float HPF_alpha = 0.0;
-    float HPF_X_old[3];
-    float HPF_Y_old[3];
+    float HPF_X_old[4];
+    float HPF_Y_old[4];
+    int HPF_count = 0.0;
+
+    float k = 0.0;
+    float kden = 0.0;
+    float kmin = 0.0;
+    float p1 = 0.0;
+    float p2 = 0.0;
+    float p3 = 0.0;
 
 /*------------------------------*/
 /*  Protection Variables        */

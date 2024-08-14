@@ -320,17 +320,27 @@ interrupt void  ADCINT_ISR(void) // ADC Interrupt
     if(Cal_Offset_Chk == 2)CalculateADC();              // 함수 실행
 
     // Digital Second-Order HPF
-    HPF_alpha = Tsamp*Tsamp*Wc*Wc/4. + Tsamp + 1;
+//    HPF_alpha = Tsamp*Tsamp*Wc*Wc/4. + Tsamp + 1;
+//
+//    for(HPF_count = 0; HPF_count < 2; HPF_count++)
+//        HPF_X_old[HPF_count] = HPF_X_old[HPF_count + 1];
+//    HPF_X_old[2] = HPF_X;
+//
+//    HPF_Y = (1 / HPF_alpha) * (HPF_X_old[0] - 2 * HPF_X_old[1] + HPF_X_old[2] - (HPF_alpha - 2 * Tsamp) * HPF_Y_old[0] - (2 * HPF_alpha - 2 * Tsamp - 4) * HPF_Y_old[1]);
+//
+//    for(HPF_count = 0; HPF_count < 1; HPF_count++)
+//        HPF_Y_old[HPF_count] = HPF_Y_old[HPF_count + 1];
+//    HPF_Y_old[1] = HPF_Y;
 
-    for(HPF_count = 0; HPF_count < 2; HPF_count++)
-        HPF_X_old[HPF_count] = HPF_X_old[HPF_count + 1];
-    HPF_X_old[2] = HPF_X;
 
-    HPF_Y = (1 / HPF_alpha) * (HPF_X_old[0] - 2 * HPF_X_old[1] + HPF_X_old[2] - (HPF_alpha - 2 * Tsamp) * HPF_Y_old[0] - (2 * HPF_alpha - 2 * Tsamp - 4) * HPF_Y_old[1]);
+       HPF_Y = -p1 * HPF_Y_old[1] - p2*HPF_Y_old[0] + p3*HPF_X - 2*p3*HPF_X_old[0] + p3*HPF_X_old[1];
 
-    for(HPF_count = 0; HPF_count < 1; HPF_count++)
-        HPF_Y_old[HPF_count] = HPF_Y_old[HPF_count + 1];
-    HPF_Y_old[1] = HPF_Y;
+       HPF_Y_old[1] = HPF_Y_old[0];
+       HPF_Y_old[0] = HPF_Y;
+
+       HPF_X_old[1] = HPF_X_old[0];
+       HPF_X_old[0] = HPF_X;
+
 
     // DAC
     OutputDAC();

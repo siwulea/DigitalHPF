@@ -326,50 +326,25 @@ typedef struct {
     int conv_val[16];
 }   ADC;
 
-
-    extern float Ia;
     extern float usrGain;
     extern float usrOffset;
-    extern float count;
-    extern float fsw;
-    extern float wcc;
-    extern float Wm_esti;
-    extern float Ra;
-    extern float La;
-    extern float Ia_ref;
-    extern float Ia_err_anti;
-    extern float Ia_err_int;
-    extern float Ia_sensor;
-    extern float V;
-    extern float V_ref;
-    extern float V_ref_fb;
-    extern float V_ref_ff;
-    extern float Ia_err;
-    extern float Ts;
-    extern float Ia_err_sum;
-    extern float Ia_lim;
-    extern float Ia_out;
-    extern float Ia_anti;
-    extern float P_cl;
-    extern float I_cl;
-    extern float Kp;
-    extern float Wcc;
-    extern float Ki;
-    extern float Ka;
-    extern float J;
-    extern float duty;
-    extern float duty_ref;
-    extern float Ia_ref_amp;
-    extern float Vdc;
-    extern float Gen_IaRef_Chk;
-    extern float Ia_ref_time;
 
-    extern float V_emf;
-    extern float Ke;
-    extern float Kt;
+    extern float HPF_X;
+    extern float HPF_Y;
+    extern float Tsamp;
+    extern float Wc;
+    extern float HPF_alpha;
+    extern float HPF_X_old[4];
+    extern float HPF_Y_old[4];
 
-    extern float count_emf;
-    extern float Ia_sensor_old;
+    extern int HPF_count;
+
+    extern float k;
+    extern float kden;
+    extern float kmin;
+    extern float p1;
+    extern float p2;
+    extern float p3;
 
     /*------------------------------*/
     /*  Protection Variables        */
