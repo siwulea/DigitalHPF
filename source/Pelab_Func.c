@@ -34,7 +34,7 @@
 void InitParameter()
 {
     Tsamp = 0.00005;
-    Wc = 2 * M_PI * 1000;
+    Wc = 2 * M_PI * 500;
 
     k = Tsamp / 2.0 * Wc;
     kden = (k+1) * (k+1);
