@@ -425,48 +425,17 @@ volatile struct XINTRUPT_REGS XIntruptRegs;
 
 volatile struct XINTF_REGS XintfRegs;
 
-    float Ia = 0.;
+/*  User Code    */
     float usrOffset = 1.52; // 1.507
     float usrGain = 6.3; // 6.3
-    float fsw = 0.0;
-    float Ra = 0.0;
-    float La = 0.0;
-    float Wcc = 0.0;
-    float Wm_esti= 0.0;
-    float count = 0.;
-    float Ia_ref = 0.;
-    float Ia_ref_amp = 0.;
-    float Ia_err_anti = 0.;
-    float Ia_sensor = 0.;
-    float V = 0.;
-    float V_ref = 0.;
-    float V_ref_fb = 0.;
-    float V_ref_ff = 0.;
-    float Vdc = 0.;
-    float Ts = 0.0001;
-    float Ia_err_int = 0.;
-    float Ia_err = 0.;
-    float Ia_err_sum = 0.;
-    float Ia_out = 0.;
-    float Ia_lim = 0.;
-    float Ia_anti = 0.;
-    float P_cl = 0.;
-    float I_cl = 0.;
-    float J = 0.0;
-    float Kp = 0.0;
-    float Ki = 0.0;
-    float Ka = 0.0;
-    float duty = 3750.0;
-    float duty_ref = 0.;
-    float Gen_IaRef_Chk = 0.;
-    float Ia_ref_time = 0.;
 
-    float V_emf = 0.0;
-    float Kt = 0.0;
-    float Ke = 0.0;
-
-    float count_emf = 0.0;
-    float Ia_sensor_old = 0.0;
+    float HPF_X = 0.0;
+    float HPF_Y = 0.0;
+    float Tsamp = 0.0;
+    float Wc = 0.0;
+    float HPF_alpha = 0.0;
+    float HPF_X_old[3];
+    float HPF_Y_old[3];
 
 /*------------------------------*/
 /*  Protection Variables        */

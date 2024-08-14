@@ -195,39 +195,5 @@ void CalculateADCOffset()   //*ADC 입력 시 DC 오프셋 값을 구하는 함수. 여기서 구
 /*------------------------------------------*/
 void CalculateADC()
 {
-    Ia_sensor = (((long)(AdcRegs.ADCRESULT2 >> 4)* 3.0 / 4096.0) - usrOffset) * usrGain;
-}
-
-
-/*------------------------------------------*/
-/*  Generate Ia_ref Waveform generateIaRef() */
-/*------------------------------------------*/
-void GenerateIaRef()
-{
-	    // 전류 지령값 생성
-	    if(count < Ia_ref_time*20000)
-	    {
-	       Ia_ref = Ia_ref_amp;
-
-	       count++;
-	    }
-//	    } else if (count >= Ia_ref_time*20000 && count < Ia_ref_time*40000)
-//	    {
-//	    	Ia_ref = 0;
-//	        count++;
-//	    }
-//	     else if (count >= Ia_ref_time*40000 && count < Ia_ref_time*60000)
-//	    {
-//	    	Ia_ref = -Ia_ref_amp;
-//	        count++;
-//	    } else if (count >= Ia_ref_time*60000 && count < Ia_ref_time*80000)
-//	    {
-//	    	Ia_ref = 0;
-//	        count++;
-//	    } else
-	       else
-	    {
-	        count = 0;
-	        Gen_IaRef_Chk = 0;
-	    }
+    HPF_X = (((long)(AdcRegs.ADCRESULT2 >> 4)* 3.0 / 4096.0) - usrOffset) * usrGain;
 }

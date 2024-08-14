@@ -319,51 +319,20 @@ interrupt void  ADCINT_ISR(void) // ADC Interrupt
 
     if(Cal_Offset_Chk == 2)CalculateADC();              // 함수 실행
 
-    if(Gen_IaRef_Chk == 1)GenerateIaRef();			// Ia_Ref 파형을 +-로 Ia_ref_easyDSP 값 만큼 주기적으로 생성
-    else Ia_ref = 0.0;
+    // Digital Second-Order HPF
+    HPF_alpha = Tsamp*Tsamp*Wc*Wc/4. + Tsamp + 1;
 
-    // Calculate back EMF
-    if(Ia_ref != 0.0)
-    {
-        if(V_emf > 12.0) V_emf = 12.0;
-        else if(V_emf < -12.0) V_emf = -12.0;
-        else
-        {
-            Wm_esti += Kt*Ia_sensor*Ts/J;
-            V_emf = Ke*Wm_esti/9.55;
-        }
-    }
-    else
-    {
-        Wm_esti = 0.0;
-        V_emf = 0.0;
-    }
+    for(HPF_count = 0; HPF_count < 2; HPF_count++)
+        HPF_X_old[HPF_count] = HPF_X_old[HPF_count + 1];
+    HPF_X_old[2] = HPF_X;
 
-    // Operate PI Control
-    Ia_err = Ia_ref - Ia_sensor;
-    Ia_err_anti = Ia_err - Ka*Ia_anti;
-    Ia_err_int += Ki*Ts*Ia_err_anti;
-    V_ref_ff = Ia_err_int + Kp*Ia_err;
-//    V_ref_ff = V_ref_fb + V_emf;
+    HPF_Y = (1 / HPF_alpha) * (HPF_X_old[0] - 2 * HPF_X_old[1] + HPF_X_old[2] - (HPF_alpha - 2 * Tsamp) * HPF_Y_old[0] - (2 * HPF_alpha - 2 * Tsamp - 4) * HPF_Y_old[1]);
 
-    if (V_ref_ff > Vdc) V_ref = Vdc;
-    else if (V_ref_ff < -Vdc) V_ref = -Vdc;
-    else V_ref = V_ref_ff;
+    for(HPF_count = 0; HPF_count < 1; HPF_count++)
+        HPF_Y_old[HPF_count] = HPF_Y_old[HPF_count + 1];
+    HPF_Y_old[1] = HPF_Y;
 
-    Ia_anti = V_ref_ff - V_ref;
-
-    Ia_sensor_old = Ia_sensor;
-
-    // Transform duty_ref to duty
-    duty_ref = V_ref / (2.0 * Vdc) + 0.5;
-    duty = (float)(duty_ref * 7500);
-
-    // Generate duty
-    EPwm1Regs.CMPA.half.CMPA = (int)duty;
-    EPwm1Regs.CMPB = (int)duty; // EPwm 1에 CMP1의 값이 출력되도록 설정
-    EPwm3Regs.CMPA.half.CMPA = (int)duty;
-    EPwm3Regs.CMPB = (int)duty;
-
+    // DAC
     OutputDAC();
 
     AdcRegs.ADCST.bit.INT_SEQ1_CLR=1;

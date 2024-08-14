@@ -15,11 +15,11 @@ void Init_Code()
         data_ptr[ri] = cfft.CurrentOutPtr[ri];
     }*/
 
-    data_ptr[ri++] = &duty_ref;         // 0 100개의 DA변수 생성
-    data_ptr[ri++] = &Ia_sensor;        // 1 TEST버젼에서는 TEST1부터 TEST6까
-    data_ptr[ri++] = &Ia_ref;           // 2
-    data_ptr[ri++] = &V_emf;            // 3
-    data_ptr[ri++] = &V_ref;           // 4
+    data_ptr[ri++] = &HPF_X;         // 0 100개의 DA변수 생성
+    data_ptr[ri++] = &HPF_Y;        // 1 TEST버젼에서는 TEST1부터 TEST6까
+    data_ptr[ri++] = &fdummy;           // 2
+    data_ptr[ri++] = &fdummy;            // 3
+    data_ptr[ri++] = &fdummy;           // 4
     data_ptr[ri++] = &fdummy;           // 5
     data_ptr[ri++] = &fdummy;           // 6
     data_ptr[ri++] = &fdummy;           // 7
